@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TrainingManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BatchDetails">
+          <Key>
+            <PropertyRef Name="DId" />
+          </Key>
+          <Property Name="DId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BatchId" Type="int" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Hours" Type="int" />
+          <Property Name="TopicsTaken" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Batches">
+          <Key>
+            <PropertyRef Name="BatchId" />
+          </Key>
+          <Property Name="BatchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BatchName" Type="varchar" MaxLength="40" />
+          <Property Name="CourseId" Type="int" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="HoursTaken" Type="int" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="TotalStrength" Type="int" />
+        </EntityType>
+        <EntityType Name="Colleges">
+          <Key>
+            <PropertyRef Name="CollegeId" />
+          </Key>
+          <Property Name="CollegeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="CollegeName" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Courses">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="20" />
+          <Property Name="Duration" Type="int" />
+        </EntityType>
+        <EntityType Name="Fees">
+          <Key>
+            <PropertyRef Name="FeeId" />
+          </Key>
+          <Property Name="FeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseName" Type="nvarchar(max)" />
+          <Property Name="TotalFees" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Trainees">
+          <Key>
+            <PropertyRef Name="TraineeId" />
+          </Key>
+          <Property Name="TraineeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BatchId" Type="int" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="TraineeCode" Type="varchar" MaxLength="10" />
+          <Property Name="TraineeName" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK__Colleges__StateI__2E1BDC42">
+          <End Role="States" Type="Self.States" Multiplicity="0..1" />
+          <End Role="Colleges" Type="Self.Colleges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Colleges">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trainees__BatchI__2F10007B">
+          <End Role="Batches" Type="Self.Batches" Multiplicity="0..1" />
+          <End Role="Trainees" Type="Self.Trainees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batches">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="Trainees">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trainees__StateI__300424B4">
+          <End Role="States" Type="Self.States" Multiplicity="0..1" />
+          <End Role="Trainees" Type="Self.Trainees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Trainees">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TrainingManagementModelStoreContainer">
+          <EntitySet Name="BatchDetails" EntityType="Self.BatchDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Batches" EntityType="Self.Batches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Colleges" EntityType="Self.Colleges" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fees" EntityType="Self.Fees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trainees" EntityType="Self.Trainees" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Colleges__StateI__2E1BDC42" Association="Self.FK__Colleges__StateI__2E1BDC42">
+            <End Role="States" EntitySet="States" />
+            <End Role="Colleges" EntitySet="Colleges" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trainees__BatchI__2F10007B" Association="Self.FK__Trainees__BatchI__2F10007B">
+            <End Role="Batches" EntitySet="Batches" />
+            <End Role="Trainees" EntitySet="Trainees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trainees__StateI__300424B4" Association="Self.FK__Trainees__StateI__300424B4">
+            <End Role="States" EntitySet="States" />
+            <End Role="Trainees" EntitySet="Trainees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TrainingManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BatchDetail">
+          <Key>
+            <PropertyRef Name="DId" />
+          </Key>
+          <Property Name="DId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BatchId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Hours" Type="Int32" />
+          <Property Name="TopicsTaken" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Batch">
+          <Key>
+            <PropertyRef Name="BatchId" />
+          </Key>
+          <Property Name="BatchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BatchName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CourseId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="HoursTaken" Type="Int32" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="TotalStrength" Type="Int32" />
+          <NavigationProperty Name="Trainees" Relationship="Self.FK__Trainees__BatchI__2F10007B" FromRole="Batches" ToRole="Trainees" />
+        </EntityType>
+        <EntityType Name="College">
+          <Key>
+            <PropertyRef Name="CollegeId" />
+          </Key>
+          <Property Name="CollegeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="CollegeName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="State" Relationship="Self.FK__Colleges__StateI__2E1BDC42" FromRole="Colleges" ToRole="States" />
+        </EntityType>
+        <EntityType Name="Cours">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Duration" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Fee">
+          <Key>
+            <PropertyRef Name="FeeId" />
+          </Key>
+          <Property Name="FeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TotalFees" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Colleges" Relationship="Self.FK__Colleges__StateI__2E1BDC42" FromRole="States" ToRole="Colleges" />
+          <NavigationProperty Name="Trainees" Relationship="Self.FK__Trainees__StateI__300424B4" FromRole="States" ToRole="Trainees" />
+        </EntityType>
+        <EntityType Name="Trainee">
+          <Key>
+            <PropertyRef Name="TraineeId" />
+          </Key>
+          <Property Name="TraineeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BatchId" Type="Int32" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="TraineeCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TraineeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Batch" Relationship="Self.FK__Trainees__BatchI__2F10007B" FromRole="Trainees" ToRole="Batches" />
+          <NavigationProperty Name="State" Relationship="Self.FK__Trainees__StateI__300424B4" FromRole="Trainees" ToRole="States" />
+        </EntityType>
+        <Association Name="FK__Trainees__BatchI__2F10007B">
+          <End Role="Batches" Type="Self.Batch" Multiplicity="0..1" />
+          <End Role="Trainees" Type="Self.Trainee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batches">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="Trainees">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Colleges__StateI__2E1BDC42">
+          <End Role="States" Type="Self.State" Multiplicity="0..1" />
+          <End Role="Colleges" Type="Self.College" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Colleges">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trainees__StateI__300424B4">
+          <End Role="States" Type="Self.State" Multiplicity="0..1" />
+          <End Role="Trainees" Type="Self.Trainee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Trainees">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TrainingManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BatchDetails" EntityType="Self.BatchDetail" />
+          <EntitySet Name="Batches" EntityType="Self.Batch" />
+          <EntitySet Name="Colleges" EntityType="Self.College" />
+          <EntitySet Name="Courses" EntityType="Self.Cours" />
+          <EntitySet Name="Fees" EntityType="Self.Fee" />
+          <EntitySet Name="States" EntityType="Self.State" />
+          <EntitySet Name="Trainees" EntityType="Self.Trainee" />
+          <AssociationSet Name="FK__Trainees__BatchI__2F10007B" Association="Self.FK__Trainees__BatchI__2F10007B">
+            <End Role="Batches" EntitySet="Batches" />
+            <End Role="Trainees" EntitySet="Trainees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Colleges__StateI__2E1BDC42" Association="Self.FK__Colleges__StateI__2E1BDC42">
+            <End Role="States" EntitySet="States" />
+            <End Role="Colleges" EntitySet="Colleges" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trainees__StateI__300424B4" Association="Self.FK__Trainees__StateI__300424B4">
+            <End Role="States" EntitySet="States" />
+            <End Role="Trainees" EntitySet="Trainees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TrainingManagementModelStoreContainer" CdmEntityContainer="TrainingManagementEntities">
+          <EntitySetMapping Name="BatchDetails">
+            <EntityTypeMapping TypeName="TrainingManagementModel.BatchDetail">
+              <MappingFragment StoreEntitySet="BatchDetails">
+                <ScalarProperty Name="DId" ColumnName="DId" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="TopicsTaken" ColumnName="TopicsTaken" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Batches">
+            <EntityTypeMapping TypeName="TrainingManagementModel.Batch">
+              <MappingFragment StoreEntitySet="Batches">
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="BatchName" ColumnName="BatchName" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="HoursTaken" ColumnName="HoursTaken" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="TotalStrength" ColumnName="TotalStrength" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Colleges">
+            <EntityTypeMapping TypeName="TrainingManagementModel.College">
+              <MappingFragment StoreEntitySet="Colleges">
+                <ScalarProperty Name="CollegeId" ColumnName="CollegeId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CollegeName" ColumnName="CollegeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="TrainingManagementModel.Cours">
+              <MappingFragment StoreEntitySet="Courses">
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fees">
+            <EntityTypeMapping TypeName="TrainingManagementModel.Fee">
+              <MappingFragment StoreEntitySet="Fees">
+                <ScalarProperty Name="FeeId" ColumnName="FeeId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="TotalFees" ColumnName="TotalFees" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="TrainingManagementModel.State">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainees">
+            <EntityTypeMapping TypeName="TrainingManagementModel.Trainee">
+              <MappingFragment StoreEntitySet="Trainees">
+                <ScalarProperty Name="TraineeId" ColumnName="TraineeId" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="TraineeCode" ColumnName="TraineeCode" />
+                <ScalarProperty Name="TraineeName" ColumnName="TraineeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
